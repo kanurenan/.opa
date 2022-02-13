@@ -30,6 +30,12 @@ if [ $1 == "rn_cios" ]; then
     rm -rf ~/Library/Caches/CocoaPods && rm -rf ~/Library/Logs/Pods && rm -rf Pods && rm -rf ~/Library/Developer/Xcode/DerivedData/* -y && pod deintegrate && pod setup
 fi
 
+if [ $1 == "f_tc" ]; then
+    flutter test --coverage
+    genhtml coverage/lcov.info -o coverage/html
+    open coverage/html/index.html
+fi
+
 # pod deintegrate
 if [ $1 == "ios_deintegrate" ]; then
     pod deintegrate && rm -rf Podfile.lock && pod install
@@ -43,4 +49,19 @@ fi
 # docker-down
 if [ $1 == 'docker-down' ]; then
     docker rm -f $(docker ps -aq)
+fi
+
+# help
+if [ $1 == 'help' ]; then
+    echo 'Opa shell script'
+    echo 'Usage: opa [command]'
+    echo 'Commands:'
+    echo '  echo: Opaaaaaaaa! ☕'
+    echo '  help: show this help'
+    echo '  f_v: flutter --version'
+    echo '  f_doc-v: flutter doctor --verbose'
+    echo '  f_br: flutter build runner'
+    echo '  f_c: flutter clean'
+    echo '  rn_cios: clear ios Podfile'
+    echo '  f_tc: flutter test and generate coverage report'
 fi
